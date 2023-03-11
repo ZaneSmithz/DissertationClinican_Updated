@@ -1,0 +1,240 @@
+body {
+    font-family: Inria Sans;
+}
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 500;
+    min-height: 100vh !important;
+    z-index: 2;
+    padding: 5em 4em 0;
+    justify-content: center;
+    justify-items: center;
+    justify-self: center;
+
+}
+.liNavLink {
+    margin-bottom: 8vh;
+    
+}
+
+.liAvatar {
+    margin-bottom: 25vh;
+    margin-left: 5.5vh;
+}
+
+.avatarBig {
+    height: 119px;
+    width: 119px;
+    object-fit: cover;
+}
+
+#page-content-wrapper {
+    min-width: 0;
+    width: 100%;
+}
+
+.containerColour {
+    position: fixed;
+    background-color: #BFD7E3;
+    width: 100%;
+    height: 100%;
+    border-bottom-left-radius: 30px;
+    border-top-left-radius: 30px;
+    margin-left: 15rem;
+
+}
+.containerColourNoNav {
+    position: fixed;
+    background-color: #BFD7E3;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.homeCardMain2 {
+    background-color: #323639 !important;
+    box-shadow: 0px 4px white !important;
+    width: 765px;
+    height: 70px !important;
+    margin-left: 4rem;
+    border-radius: 500px;
+}
+
+.homeCardMain {
+    background-color: #7E9BA9 !important;
+    box-shadow: 0px 4px white !important;
+    width: 765px;
+    height: 70px !important;
+    margin-left: 4rem;
+    border-radius: 500px;
+}
+
+.homeCardTopSpacing {
+    margin-top: 5rem;
+    max-height: 350px !important;
+    overflow-y: auto;
+}
+
+.homeCardSpacing {
+    margin-bottom: 3rem;
+}
+
+.homeCardTextAlign {
+    color: white;
+    flex-direction: row;
+    display: flex;
+    justify-content: space-between;
+}
+
+.paragraphBlocking {
+    width: 50%;
+    text-align: center;
+    margin-block-end: 5px;
+    margin-block-start: 5px;
+}
+
+.homePageHr {
+    width: 50% !important;
+    border-top: 1px solid white;
+    margin-left: 5rem;
+    margin-top: 3rem !important;
+    position: fixed;
+
+}
+
+.userProfileCard {
+    margin-right: 25rem;
+    margin-left: 25rem;
+    margin-top: 5rem;
+    background-color: #7E9BA9 !important;
+    box-shadow: 0px 4px white !important;
+    width: 264px !important;
+    height: 248px !important;
+    margin-left: 4rem;
+    border-radius: 500px;
+}
+
+.userCardTextAlign {
+    color: white;
+    text-align: center;
+
+}
+
+.homeCardsDivsRowAlign {
+    flex-direction: row;
+    display: flex;
+    justify-content: space-between;
+}
+
+
+.avatarSmall {
+    height: 90px;
+    width: 90px;
+    object-fit: cover;
+    justify-content: center;
+}
+
+.userCardNameParagraph {
+    font-weight: bold
+}
+
+.verticalLine {
+    border-left: 1px solid white;
+    height: 80%;
+    position: fixed;
+    margin-top: 2%;
+    right: 30%;
+    margin-left: -3px;
+    top: 0;
+}
+
+.chatApp {
+    margin-top: 5rem;
+    max-height: 350px !important;
+    left: 100px;
+    right: 1000px;
+    overflow-y: auto;
+}
+.chat-input-field {
+    width: 50% !important;
+}
+
+.chat-app {
+    align-items: center;
+    font-family: sans-serif;
+    width: 50%;
+    border-radius: 5px;
+    overflow-y: scroll !important;
+    white-space: nowrap;
+    border: 2px solid #3b5998;
+    height: 50% !important;
+    position: fixed;
+  }
+  .header {
+    background-color: #3b5998;
+    color: white;
+    width: 100%;
+    text-align: center;
+  }
+  .messages {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    height: 80% !important;
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+  
+  .message {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 10px;
+  }
+  
+ 
+  .user {
+    font-weight: bold;
+    margin-right: 10px;
+    color: #333;
+  }
+  
+  .new-message-form {
+    display: flex;
+    width: 100%;
+    padding: 10px;
+  }
+  
+  .new-message-input {
+    border: none;
+    outline: none;
+    background: transparent;
+    font-size: 16px;
+    color: #333;
+    padding: 10px;
+    border-radius: 5px 0 0 5px;
+    width: 40% !important;
+  }
+  
+  .send-button {
+    border: none;
+    outline: none;
+    background: #3b5998;
+    color: #fff;
+    font-size: 16px;
+    font-weight: bold;
+    width: 10%;
+  }
+
+  .send-form-div {
+    bottom: 0%;
+    position: fixed;
+    width: 100%;
+  }
+
