@@ -61,7 +61,7 @@ body {
     background-color: #323639 !important;
     box-shadow: 0px 4px white !important;
     width: 765px;
-    height: 70px !important;
+    height: 97px !important;
     margin-left: 4rem;
     border-radius: 500px;
 }
@@ -70,15 +70,22 @@ body {
     background-color: #7E9BA9 !important;
     box-shadow: 0px 4px white !important;
     width: 765px;
-    height: 70px !important;
+    height: 97px !important;
     margin-left: 4rem;
     border-radius: 500px;
 }
 
 .homeCardTopSpacing {
-    margin-top: 5rem;
-    max-height: 350px !important;
+    margin-top: 10%;
+    margin-left: 8%;
+    max-height: 440px !important;
     overflow-y: auto;
+}
+
+.bottomRowCardSpacing {
+    align-items: center;
+    
+    
 }
 
 .homeCardSpacing {
@@ -102,22 +109,75 @@ body {
 .homePageHr {
     width: 50% !important;
     border-top: 1px solid white;
-    margin-left: 5rem;
-    margin-top: 3rem !important;
+    margin-top: 2rem;
+    margin-left: 8rem;
     position: fixed;
 
 }
+.noPadding {
+    margin: 0;
+    padding: 0;;
+}
 
 .userProfileCard {
-    margin-right: 25rem;
-    margin-left: 25rem;
-    margin-top: 5rem;
+    margin-top: 10%;
+    margin-left: 0% !important;
     background-color: #7E9BA9 !important;
-    box-shadow: 0px 4px white !important;
+    box-shadow: 0px 6px white !important;
     width: 264px !important;
     height: 248px !important;
     margin-left: 4rem;
     border-radius: 500px;
+}
+
+.graphChartCard {
+    margin-top: 10%;
+    margin-left: 0% !important;
+    background-color: #7E9BA9 !important;
+    box-shadow: 0px 6px white !important;
+    width: 264px !important;
+    height: 297px !important;
+    border-radius: 500px;
+
+}
+
+.clientLogCard {
+    margin-top: 10% !important;
+    margin-left: 0% !important;
+    position: fixed;
+    background-color: #7E9BA9 !important;
+    box-shadow: 0px 6px white !important;
+    width: 264px !important;
+    height: 244px !important;
+    border-radius: 500px;
+    margin-bottom: 20rem;
+}
+
+.clientInfoCard {
+    margin-top: 7% !important;
+    margin-left: 10%;
+    position: fixed;
+    background-color: #7E9BA9 !important;
+    box-shadow: 0px 6px white !important;
+    width: 300px !important;
+    height: 297px !important;
+    border-radius: 500px;
+    margin-bottom: 20rem;
+    overflow-y: auto;
+}
+
+.moduleOverviewCard {
+    margin-top: 7% !important;
+    margin-top: 0%;
+    margin-left: 10%;
+    background-color: #7E9BA9 !important;
+    box-shadow: 0px 6px white !important;
+    width: 508px !important;
+    height: 292px !important;
+    border-radius: 500px;
+    overflow-y: auto;
+
+
 }
 
 .userCardTextAlign {
@@ -130,6 +190,38 @@ body {
     flex-direction: row;
     display: flex;
     justify-content: space-between;
+}
+
+.graphChartCardRowAlign {
+    flex-direction: row;
+    display: flex;
+    justify-content: space-between;
+    justify-content: end;
+
+}
+
+.bottomRowContainer {
+    margin-right: 10rem;
+    flex-direction: row;
+    display: flex;
+    justify-content: end;
+}
+
+.clientLogCardRowAlign {
+    justify-content: start;
+}
+
+.clientInfoCardRowAlign {
+    justify-content: end;
+}
+
+.clientInfoCardRowAlign {
+    flex-direction: row;
+    display: flex;
+    justify-content: space-between;
+    justify-content: start;
+    width: 100%;
+
 }
 
 
@@ -149,8 +241,15 @@ body {
     height: 80%;
     position: fixed;
     margin-top: 2%;
-    right: 30%;
+    right: 22%;
     margin-left: -3px;
+    top: 0;
+}
+
+.verticalLineClientInfo {
+    border-left: 1px solid white;
+    height: 100%;
+    position: fixed;
     top: 0;
 }
 
@@ -236,5 +335,19 @@ body {
     bottom: 0%;
     position: fixed;
     width: 100%;
+  }
+
+  *::-webkit-scrollbar {
+    width: 12px;
+  }
+  
+  *::-webkit-scrollbar-track {
+    background: white;
+  }
+  
+  *::-webkit-scrollbar-thumb {
+    background-color: #7E9BA9;
+    border-radius: 20px;
+    border: 3px solid white;
   }
 

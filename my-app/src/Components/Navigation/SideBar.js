@@ -3,6 +3,7 @@ import {Nav, Image} from 'react-bootstrap';
 import '../CSS/Dashboard.css';
 import { UseAuth } from '../../Contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import {IoHomeOutline } from "react-icons/io5"
 
 const SideBar = (props) => {
     const { currentUser, logout } = UseAuth();

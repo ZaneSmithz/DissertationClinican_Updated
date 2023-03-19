@@ -1,6 +1,6 @@
 import {useState, useEffect, React, useLayoutEffect} from 'react'
 import {db} from '../firebase'
-import {collection, query, onSnapshot, where, doc, orderBy, getDocs, addDoc, serverTimestamp} from "firebase/firestore"
+import {collection, query, onSnapshot, where, orderBy, getDocs, addDoc, serverTimestamp, doc, writeBatch} from "firebase/firestore"
 import { UseAuth } from '../Contexts/AuthContext';
 import HomeCard from '../Components/Cards/HomeCard';
 import { Button, Form, Container } from 'react-bootstrap';
@@ -12,21 +12,18 @@ const Chat = () => {
     const [selected, setSelected] = useState(null);
     const [newMessage, setNewMessages] = useState("")
     const [messages, setMessages] = useState([]);
-    const [uid, setUid] = useState();
     const [chatId, setChatId] = useState();
 
+
     useEffect(() => {
-        const q = query(collection(db, currentUser.uid));
+        const q = query(collection(db, 'client_clinican_collection'), where('users', "array-contains", currentUser?.uid));
           onSnapshot(q, (querySnapshot) => {
             setUser(querySnapshot.docs.map(doc => ({
               id: doc.id,
               data: doc.data(),
             })))
           })
-
-          console.log(currentUser.uid);
-          setUid(currentUser.uid)
-    },[])
+        },[])
 
     useEffect(() => {
         let chatQuery;
@@ -51,28 +48,56 @@ const Chat = () => {
             });
           console.log("CHAT QUERY ", chatQuery);
         }
-    }, [uid, selected])
-    
-    useEffect(() => {
+    }, [selected])
+
+    useEffect( () => {
         if(chatId) {
             const messageRefNew = collection(doc(db, 'chats', chatId), 'messages');
-                const q  = query(messageRefNew, orderBy('createdAt', 'asc'));
-                console.log("entering final useeffect, message ref complete")
+            const q = query(messageRefNew, orderBy('createdAt', 'asc'));
 
-                const unsubscribe = onSnapshot(q, (snapshot) => setMessages(
-                    snapshot.docs.map(doc => ({
-                        _id: doc.data()._id,
-                        createdAt: serverTimestamp(),
-                        text: doc.data().text,
-                        user: doc.data().user,
-                    }))
-                ));
-                return () => {
-                    unsubscribe();
+            const unsubscribe = onSnapshot(q, (snapshot) => setMessages(
+                snapshot.docs.map(doc => ({
+                    _id: doc.data()._id,
+                    createdAt: serverTimestamp(),
+                    text: doc.data().text,
+                    user: doc.data().user,
+                }))
+            ));
+            
+            
+            return () => {
+                unsubscribe();
             }
         }
 
     }, [chatId])
+    
+    useEffect( () => {
+        if(chatId) {
+            const messageRefNew = collection(doc(db, 'chats', chatId), 'messages');
+            const unreadDocsQuery = query(messageRefNew, where('clinican_unread', '==', true));
+            const batch = writeBatch(db);
+
+            getDocs(unreadDocsQuery).then((querySnapshot) => {
+                // Loop over the query snapshot documents
+                querySnapshot.docs.forEach((doc) => {
+                  // Update each document in the collection
+                  console.log("doc.id = " + doc.id);
+              
+                  // Use doc.ref instead of doc.id to get a DocumentReference object
+                  batch.update(doc.ref, { clinican_unread: false });
+                });
+              
+                // Commit the batch write
+                return batch.commit();
+              
+              }).then(() => {
+                console.log('All documents updated successfully');
+              }).catch((error) => {
+                console.log('Error updating documents:', error);
+              });
+
+    }}, [chatId])
 
     const handleSubmit = async(e) => {
         console.log("entered handle submit!")
@@ -103,10 +128,10 @@ const Chat = () => {
                     selected={selected}
                     setSelected={setSelected}
                     user={user}
-                    firstName={user.data.first_name}
-                    lastName={user.data.last_name}
-                    moduleNum={user.data.currentModuleNum}
-                    chapterNum={user.data.currentChapterNum}
+                    firstName={user.data.client_first_name}
+                    lastName={user.data.client_last_name}
+                    moduleNum={user.data.currentModule}
+                    chapterNum={user.data.currentChapter}
                     />
                 ))} 
         </div>
@@ -114,7 +139,7 @@ const Chat = () => {
             <div className="messages">
                 {messages.map((message) => (
                     <div className="message">
-                        <span className="user"> {message.text}  </span>
+                        <span className="user"> {message.text} {/* if message?.user._id -> render differently */} </span>
                     </div>
                 ))}
             </div>
