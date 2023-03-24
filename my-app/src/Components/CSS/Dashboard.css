@@ -82,6 +82,13 @@ body {
     overflow-y: auto;
 }
 
+.homeCardTopSpacingChat {
+    margin-top: 4% !important;
+    margin-left: 8%;
+    max-height: 300px !important;
+    overflow-y: auto;
+}
+
 .bottomRowCardSpacing {
     align-items: center;
     
@@ -151,6 +158,7 @@ body {
     height: 244px !important;
     border-radius: 500px;
     margin-bottom: 20rem;
+    overflow-y: auto;
 }
 
 .clientInfoCard {
@@ -253,27 +261,21 @@ body {
     top: 0;
 }
 
-.chatApp {
-    margin-top: 5rem;
-    max-height: 350px !important;
-    left: 100px;
-    right: 1000px;
-    overflow-y: auto;
-}
 .chat-input-field {
     width: 50% !important;
 }
 
 .chat-app {
+    margin-right: 22%;
+    margin-top: 9% !important;
     align-items: center;
     font-family: sans-serif;
-    width: 50%;
+    width: 50% !important;
     border-radius: 5px;
     overflow-y: scroll !important;
     white-space: nowrap;
     border: 2px solid #3b5998;
-    height: 50% !important;
-    position: fixed;
+    height: 10% !important;
   }
   .header {
     background-color: #3b5998;
@@ -286,22 +288,42 @@ body {
     flex-direction: column;
     align-items: flex-start;
     width: 100%;
-    height: 80% !important;
+    max-height: 10% !important;
     padding: 10px;
     margin-bottom: 10px;
   }
   
-  .message {
+  .messageBoxClient {
+    margin-bottom: 10px;
+    width: 100%;
+  }
+
+  .messageBoxClinican {
+    margin-bottom: 10px;
+    max-width: 10%;
+  }
+
+  .messageClinican {
+    align-items: flex-end;
+    display: flex;
+  }
+
+  .messageClient {
     display: flex;
     align-items: flex-start;
-    margin-bottom: 10px;
+
   }
   
  
-  .user {
+  .userTextMessage {
     font-weight: bold;
     margin-right: 10px;
-    color: #333;
+    color: #FFF;
+  }
+
+  .clinicanTextMessage{
+    font-weight: bold;
+    color: '#323639';
   }
   
   .new-message-form {
@@ -332,8 +354,8 @@ body {
   }
 
   .send-form-div {
-    bottom: 0%;
-    position: fixed;
+    margin-top: 30% !important;
+    margin-left: 15%;
     width: 100%;
   }
 

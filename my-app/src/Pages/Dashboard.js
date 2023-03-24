@@ -13,6 +13,7 @@ import LogCard from '../Components/Cards/LogCard';
 import ClientInfoCard from '../Components/Cards/ClientInfoCard';
 import ModuleOverviewCard from '../Components/Cards/ModuleOverviewCard';
 import LogCardSkeleton from  '../Components/Cards/LogCardSkeleton';
+import dateFormat from './DateFormatter';
 
 const queryContentful = `
 query {
@@ -59,7 +60,7 @@ const Dashboard = (props) => {
     const [chatId, setChatId] = useState()
     const [docLog, setDocLog] = useState([]);
     const [messages, setMessages] = useState([]);
-    const [fetched, setFetched] = useState(false);
+    const [userTextResponse, setTextResponse] = useState([]);
 
     // 
 
@@ -109,6 +110,26 @@ const Dashboard = (props) => {
               chapterIdDoc: doc.data().chapterId,
               moduleIdDoc: doc.data().moduleId,
               chapterCompletedDoc: doc.data().chapterCompleted,
+              timeStamp: doc.data().timeStamp,
+            })))
+          }).catch((error) => {
+            console.error('error getting doc', error);
+          })
+        }
+      }, [clientClinicanFirebaseId]);
+
+      useEffect (() => { 
+        if(clientClinicanFirebaseId) {
+        const chapterRef = collection(db, 'client_clinican_collection', clientClinicanFirebaseId, 'chapters');
+        const myQuery = query(chapterRef, where('textResponse', '!=', null))
+    
+          getDocs(myQuery).then((querySnapshot) => {
+            setTextResponse(querySnapshot.docs.map((doc) => ( {
+              id: doc.id,
+              chapterIdDoc: doc.data().chapterId,
+              moduleIdDoc: doc.data().moduleId,
+              chapterCompletedDoc: doc.data().chapterCompleted,
+              textResponse: doc.data().textResponse,
             })))
           }).catch((error) => {
             console.error('error getting doc', error);
@@ -151,6 +172,7 @@ const Dashboard = (props) => {
             id: doc.id,
             text: doc.data().text,
             user: doc.data().user,
+            createdAt: doc.data().createdAt,
           })))
         }).catch((error) => {
           console.error('error getting doc', error);
@@ -166,11 +188,9 @@ const Dashboard = (props) => {
         return <span> Loading... </span>
     } 
 
-    const findCurrentModule = () => {
+    const findTotalChapterNum = () => {
       if (selected) {
         const currentModule = selected.data.currentModule;
-        const currentChapter = selected.data.currentChapter;
-        const name = selected.data.client_first_name;
     
         for (const item of moduleCollection.items) {
           if (item.moduleId == currentModule) {
@@ -184,9 +204,9 @@ const Dashboard = (props) => {
     };
 
 
-    const setBadgeContent = (firstName, clientEmail) => {
+    const setBadgeContent = (clientEmail) => {
       let localCounter = 0; 
-      if(messages != null ) {
+;      if(messages != null ) {
           messages.map((message) => {
               if(message.user._id == clientEmail) {
             
@@ -220,7 +240,7 @@ const Dashboard = (props) => {
                   moduleNum={user.data.currentModule}
                   chapterNum={user.data.currentChapter}
                   clientEmail={user.data.client_email}
-                  unreadMessages={setBadgeContent(user.data.client_first_name , user.data.client_email)}
+                  unreadMessages={setBadgeContent(user.data.client_email)}
                 />
 
             ))
@@ -229,9 +249,14 @@ const Dashboard = (props) => {
           <div className='homePageHr'></div>
           <Row>
 
+            {/*
+            - Calculate if moduleId == textResponse.moduleId && chapterId == textReponse.chapterId
+            */}
+
           {moduleCollection != null ? 
             <ModuleOverviewCard
               moduleCollection={moduleCollection}
+              textResponse={userTextResponse}
             /> :
             undefined
           }
@@ -283,7 +308,7 @@ const Dashboard = (props) => {
         {selected != null ? 
         <GraphCard
         chapterCurrent={selected.data.currentChapter}
-        chapterTotal={ findCurrentModule()}/>
+        chapterTotal={ findTotalChapterNum()}/>
         :
         undefined
 }
@@ -291,7 +316,8 @@ const Dashboard = (props) => {
         {selected != null && docLog != null ?
           <LogCard
           docLog={docLog}
-          firstName={selected.data.client_first_name}/>: 
+          firstName={selected.data.client_first_name}
+          unreadMessages={setBadgeContent(selected.data.client_email)}/>: 
           
           <LogCardSkeleton
           />}

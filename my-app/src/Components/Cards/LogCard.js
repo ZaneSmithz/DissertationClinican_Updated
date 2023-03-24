@@ -3,6 +3,7 @@ import {Card, Row, Col} from 'react-bootstrap';
 
 const LogCard = (props) => {
 
+  console.log("unread messages amount: " + props.unreadMessages);
 
   return (
     <Card  className={ "clientLogCard shadow-inner rounded"}>
@@ -15,7 +16,7 @@ const LogCard = (props) => {
           props.docLog.map((log) => 
             <Row>
               <Col md={4}>
-                <p> 19/12/2022: </p>
+                <p>19/02/23</p>
               </Col> 
 
               <Col md={8}>
@@ -26,7 +27,22 @@ const LogCard = (props) => {
               )
             :
             <h> RETURN FAILURE {console.log(props.firstName + " Return failrue")} </h>
-      } 
+       }
+
+       {props.unreadMessages != 0 ? 
+             <Row>
+             <Col md={4}>
+               <p> 19/12/2022: </p>
+             </Col> 
+
+             <Col md={8}>
+               <p style={{whiteSpace:'pre'}}> Unread Messages: {props.unreadMessages}</p>
+             </Col>
+             <hr/>
+           </Row>
+           :
+           undefined
+      }
 
        </div>
        </Card.Body>

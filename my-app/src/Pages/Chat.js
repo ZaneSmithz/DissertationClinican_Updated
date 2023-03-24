@@ -3,7 +3,7 @@ import {db} from '../firebase'
 import {collection, query, onSnapshot, where, orderBy, getDocs, addDoc, serverTimestamp, doc, writeBatch} from "firebase/firestore"
 import { UseAuth } from '../Contexts/AuthContext';
 import HomeCard from '../Components/Cards/HomeCard';
-import { Button, Form, Container } from 'react-bootstrap';
+import { Button, Form, Container, Row } from 'react-bootstrap';
 import { v4 as uuidv4 } from 'uuid';
 
 const Chat = () => {
@@ -122,7 +122,8 @@ const Chat = () => {
 
   return (
     <Container>
-        <div className="homeCardTopSpacing mx-5" md={3}>
+        <Row>
+        <div className="homeCardTopSpacingChat mx-5" md={3}>
             {users.map((user) => (
                     <HomeCard
                     selected={selected}
@@ -135,15 +136,27 @@ const Chat = () => {
                     />
                 ))} 
         </div>
-        <div className="chat-app">
-            <div className="messages">
-                {messages.map((message) => (
-                    <div className="message">
-                        <span className="user"> {message.text} {/* if message?.user._id -> render differently */} </span>
+        </Row>
+
+        <Row style={{justifyContent: 'center', maxHeight: '100px'}}>
+        <div className="chat-app" style={{ maxHeight: '300px'}}>
+            <div style={{ maxHeight: '250px'}} >
+            {messages.map((message) => {
+                return message?.user?._id ? (
+                    <div className="messageBoxClinican" style={{ alignItems: 'flex-start', flexDirection: 'column', display: 'flex'}} >
+                    <div className='messageClinican'> <span className="clinicanTextMessage"> {message.text} </span> </div>
                     </div>
-                ))}
+                ) : (
+                    <div className="messageBoxClient" style={{ alignItems: 'flex-end', flexDirection: 'column', display: 'flex'}} >
+                    <div className='messageClient'> <span className="userTextMessage"> {message.text} </span> </div> 
+                    </div>
+                );
+                })}
             </div>
         </div>
+        </Row>
+        <Row>
+
 
         <div className='send-form-div'>
             <Form onSubmit={handleSubmit}>
@@ -154,9 +167,11 @@ const Chat = () => {
                     onChange={(e) => setNewMessages(e.target.value)}
                     value={newMessage}
                 />
-                <Button type="submit" className="send-button">Submit</Button>
+                <Button type="submit" className="send-button my-3 mx-1">Submit</Button>
             </Form>
         </div>
+        </Row>
+       
     </Container>
   )
 }

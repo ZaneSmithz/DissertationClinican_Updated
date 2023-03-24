@@ -3,9 +3,32 @@ import {Card, Col, Row, Modal, Button} from 'react-bootstrap';
 
 const ModuleOverviewCard = (props) => {
   const [show, setShow] = useState(false);
+  const [moduleItem, setModuleItem] = useState();
+  const [userAnswers, setUserAnswers] = useState([]);
 
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const handleClose = () => {
+    setShow(false);
+    setModuleItem(null);
+    setUserAnswers(null);
+  }
+
+  const handleShow = (contentfulModule) => {
+    setModuleItem(contentfulModule)
+    let newArray = []
+    props.textResponse.map((response) => {
+      
+      if(response.moduleIdDoc == contentfulModule.moduleId) {
+        newArray = [...newArray, response]
+      }
+    })
+    setUserAnswers(newArray);
+  
+    setShow(true);
+  }
+
+  /*
+  Onclick = filter textResponse so only moduleId == textResponse.moduleId
+  */
 
 
   return (
@@ -19,11 +42,11 @@ const ModuleOverviewCard = (props) => {
           {props.moduleCollection.items.map((item) =>
             <Row>
               <Col style={{textAlign: 'start'}} md={8}>
-                <p className="mx-5" style={{whiteSpace:'pre', fontWeight:'600'}}> {item.moduleTitle}</p>
+                <p className="mx-5" style={{whiteSpace:'pre', fontWeight:'600'}}>{item.moduleTitle}</p>
               </Col>
 
               <Col md={4}>
-                <Button className='mb-3' variant="secondary" onClick={handleShow} > View </Button>
+                <Button className='mb-3' variant="secondary" onClick={() => handleShow(item)} > View </Button>
               </Col>
             <hr/>
             </Row>
@@ -32,8 +55,9 @@ const ModuleOverviewCard = (props) => {
           </div>
         </Card.Body>
       </Card>
-
+{moduleItem ? 
     <Modal
+    
         show={show}
         onHide={handleClose}
         backdrop="static"
@@ -44,17 +68,23 @@ const ModuleOverviewCard = (props) => {
         </Modal.Header>
 
         <Modal.Body>
+          {/* if response.chapterId == chapter.id then render */}
           
-        {props.moduleCollection.items.map((item) =>
-          item.moduleChapters.links.entries.block.map((chapter) => (
+
+         { moduleItem.moduleChapters.links.entries.block.map((chapter) => (
           <div key={chapter.id}>
-            <p>TEST TEST</p>
+            <p style={{fontWeight: 650}}> {chapter.chapterTitle} </p>
             {chapter.chapterActivity.json.content.map((content) => (
             <p key={content.nodeUid}>{content.content[0].value}</p>
             ))}
+
+            {userAnswers.map((answer) => (
+            <p style={{color: "red"}}> { chapter.chapterId == answer.chapterIdDoc ? answer.textResponse : undefined} </p> 
+            ))}
+
           </div>
           ))
-        )}
+        }
 
           
         </Modal.Body>
@@ -66,6 +96,7 @@ const ModuleOverviewCard = (props) => {
         </Modal.Footer>
 
       </Modal>
+      : undefined }
   </Fragment>
   )
 }
